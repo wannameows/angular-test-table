@@ -1,0 +1,33 @@
+<div *ngIf="rows">
+  <input
+    [(ngModel)]="searchValue"
+    (ngModelChange)="searchBy()"
+    placeholder="Search" />
+  <table class="table">
+    <thead>
+      <tr>
+        <th
+          *ngFor="let col of cols"
+          (click)="sortBy(col)"
+        >
+        {{ col }}
+          <ng-container *ngIf="sort.column === col">
+            <label *ngIf="sort.type === 'ASC'; else upArrow;">
+              ASC
+            </label>
+            <ng-template #upArrow>
+              <label>DESC</label>
+            </ng-template>
+          </ng-container>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of rows">
+        <td *ngFor="let col of cols">
+          {{ row[col] | tableFormatter }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
